@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up - Magic Mind</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Create an account</h1>
+      <form id="signup-form">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="password" required minlength="6" />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="login.html">Login</a></p>
+
+      <div id="message" role="status" aria-live="polite"></div>
+    </main>
+
+    <script>
+      // TODO: Replace with your Firebase project config
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+
+      const signupForm = document.getElementById('signup-form');
+      const message = document.getElementById('message');
+
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        message.textContent = 'Creating account...';
+
+        auth.createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            message.textContent = 'Account created. You may now log in.';
+            signupForm.reset();
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 900);
+          })
+          .catch((error) => {
+            message.textContent = error.message;
+          });
+      });
+    </script>
+  </body>
+</html>
