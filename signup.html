@@ -28,7 +28,7 @@
     </main>
 
     <script>
-      // TODO: Replace with your Firebase project config
+      // TODO: Replace with your Firebase project config (from Firebase Console -> Project settings -> Your apps)
       const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_AUTH_DOMAIN",
@@ -38,30 +38,51 @@
         appId: "YOUR_APP_ID"
       };
 
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
+      function isConfigValid(cfg) {
+        if (!cfg) return false;
+        const bad = (v) => !v || typeof v !== 'string' || v.trim() === '' || v.includes('YOUR_');
+        if (bad(cfg.apiKey) || bad(cfg.authDomain) || bad(cfg.projectId)) return false;
+        return true;
+      }
 
-      const signupForm = document.getElementById('signup-form');
       const message = document.getElementById('message');
+      const signupForm = document.getElementById('signup-form');
 
-      signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value;
-        message.textContent = 'Creating account...';
+      if (!isConfigValid(firebaseConfig)) {
+        const instruction = `
+          <strong>Firebase configuration missing or invalid.</strong>
+          <p>To enable authentication: 1) Create a Firebase project at <a href="https://console.firebase.google.com/" target="_blank">console.firebase.google.com</a>;
+          2) Register a Web app (</>), copy the config object and paste it into the <code>firebaseConfig</code> object in this file;
+          3) In Firebase Console → Authentication → Sign-in method enable <em>Email/Password</em>;
+          4) Serve the page over HTTP(S) (do not open via <code>file://</code>).</p>
+        `;
+        if (message) message.innerHTML = instruction;
+        // disable form controls to avoid confusing API errors
+        signupForm.querySelectorAll('input, button').forEach(el => el.disabled = true);
+        console.warn('Firebase config looks invalid or uses placeholder values. Please add your project config to signup.html.');
+      } else {
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-        auth.createUserWithEmailAndPassword(email, password)
-          .then((userCredential) => {
-            message.textContent = 'Account created. You may now log in.';
-            signupForm.reset();
-            setTimeout(() => {
-              window.location.href = 'login.html';
-            }, 900);
-          })
-          .catch((error) => {
-            message.textContent = error.message;
-          });
-      });
+        signupForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+          message.textContent = 'Creating account...';
+
+          auth.createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+              message.textContent = 'Account created. You may now log in.';
+              signupForm.reset();
+              setTimeout(() => {
+                window.location.href = 'login.html';
+              }, 900);
+            })
+            .catch((error) => {
+              message.textContent = error.message;
+            });
+        });
+      }
     </script>
   </body>
 </html>
