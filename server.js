@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,6 +25,16 @@ if (!mongoUri) {
     .catch(err => console.error('MongoDB connection error:', err));
 }
 
+// Determine JWT secret: prefer explicit JWT_SECRET, otherwise derive from MONGODB_URI for convenience.
+const jwtSecret = (() => {
+  if (process.env.JWT_SECRET && process.env.JWT_SECRET.trim() !== '') return process.env.JWT_SECRET;
+  if (mongoUri && mongoUri.trim() !== '') {
+    // Derive a secret deterministically from the MongoDB URI (keeps behavior consistent without extra config).
+    return crypto.createHash('sha256').update(mongoUri).digest('hex');
+  }
+  return 'dev_secret_change_me';
+})();
+
 // Simple User model (email + passwordHash)
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
@@ -33,16 +44,14 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 function createToken(user) {
-  const secret = process.env.JWT_SECRET || 'dev_secret_change_me';
-  return jwt.sign({ id: user._id, email: user.email }, secret, { expiresIn: '7d' });
+  return jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: '7d' });
 }
 
 function verifyToken(req, res, next) {
   const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
   try {
-    const secret = process.env.JWT_SECRET || 'dev_secret_change_me';
-    const payload = jwt.verify(token, secret);
+    const payload = jwt.verify(token, jwtSecret);
     req.user = payload;
     next();
   } catch (err) {
