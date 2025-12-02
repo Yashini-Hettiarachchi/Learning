@@ -6,21 +6,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.querySelector('.search-form');
     const searchInput = document.querySelector('.search-input');
 
-    // Toggle Mobile Menu
-    navToggle.addEventListener('click', () => {
-        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', !isExpanded);
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+    // Toggle Mobile Menu (safe checks)
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
 
-    // Keyboard Support for Nav Toggle
-    navToggle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            navToggle.click();
-        }
-    });
+        // Keyboard Support for Nav Toggle
+        navToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navToggle.click();
+            }
+        });
+
+        // Close when clicking outside the menu
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 
     // Close Mobile Menu on Link Click
     navLinks.forEach(link => {

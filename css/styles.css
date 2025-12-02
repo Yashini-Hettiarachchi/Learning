@@ -692,6 +692,12 @@ a:hover {
 
     .nav-toggle {
         display: block;
+        background: none;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        z-index: 1100;
+        position: relative;
     }
 
     .hamburger {
@@ -701,6 +707,23 @@ a:hover {
         background-color: var(--primary-color);
         position: relative;
     }
+
+    /* Make the nav-toggle visually focusable */
+    .nav-toggle:focus { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
+    /* Menu links on mobile: full width rows */
+    .nav-menu .quick-link,
+    .nav-menu li a {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        color: var(--text-color);
+        border-radius: 6px;
+        margin-bottom: 0.4rem;
+    }
+
+    .nav-menu .quick-link:hover,
+    .nav-menu li a:hover { background: var(--primary-color); color: #fff; }
 
     .hamburger::before,
     .hamburger::after {
@@ -733,6 +756,12 @@ a:hover {
         transform: rotate(-45deg);
         top: 0;
     }
+
+    /* Prevent the fixed nav from covering page content on small screens */
+    body { padding-top: 72px; }
+
+    /* Slightly reduce hero height for mobile */
+    .home-section { min-height: calc(100vh - 72px); padding-top: 24px; padding-bottom: 24px; }
 
     .document-card {
         flex-direction: column;
