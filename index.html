@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title> Beyond Care | Student Learning Platform (Grade 6 - A/L)</title>
+    <title>Beyond Care | Mental Health & Counselling Support</title>
 
     <meta name="description"
-        content=" Beyond Care is a complete student learning platform offering study materials, notes, tutorials, model papers, and past papers for all subjects from Grade 6 to A/L.">
+        content="Beyond Care is a safe and confidential mental health counselling platform offering emotional support, guidance, stress management resources, and 24/7 help for anyone feeling overwhelmed, anxious, or alone.">
 
     <meta name="keywords"
-        content=" Beyond Care, student learning, education, Grade 6, Grade 7, Grade 8, Grade 9, O/L, A/L, study materials, past papers, school subjects, tutorials, notes, Sri Lanka education">
+        content="Beyond Care, counselling, mental health support, stress, anxiety, depression, emotional help, Sri Lanka counselling, confidential help, therapy, online support">
 
     <link rel="stylesheet" href="/css/styles.css">
 
@@ -19,31 +19,85 @@
         /* Critical inline CSS for immediate rendering */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; color: #111827; background-color: #ffffff; line-height: 1.6; scroll-behavior: smooth; }
-        :root { --primary-color: #2f5948; --hover-color: #5a8d6d; --text-color: #1c2e22; --secondary-bg: #e7efe6; --nav-bg: rgba(212, 227, 211, 0.95); --border-color: #b7c9b3; }
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; background-color: var(--secondary-bg); border-bottom: 1px solid var(--border-color); padding: 12px 24px; z-index: 1000; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        .nav-container { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+
+        /* Updated counseling theme colors */
+        :root { 
+            --primary-color: #3a5f5f; 
+            --hover-color: #5e8d8d; 
+            --text-color: #1c2e22; 
+            --secondary-bg: #e9f3f3; 
+            --nav-bg: rgba(220, 235, 235, 0.95); 
+            --border-color: #bcd4d4; 
+        }
+
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; 
+            background-color: var(--secondary-bg); 
+            border-bottom: 1px solid var(--border-color); 
+            padding: 12px 24px; 
+            z-index: 1000; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+
+        .nav-container { 
+            width: 100%; display: flex; justify-content: space-between; align-items: center; 
+        }
+
         .nav-brand { display: flex; align-items: center; gap: 10px; }
         .nav-icon { font-size: 40px; color: var(--primary-color); }
         .logo { font-size: 24px; font-weight: 600; color: var(--primary-color); text-decoration: none; }
+
         .nav-menu { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin: 0; align-items: center; }
         .quick-link { text-decoration: none; color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s ease; }
         .quick-link:hover { background-color: var(--primary-color); color: #ffffff; }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .section { padding: 80px 0; }
-        .home-section { background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/wallpaper.jpg') no-repeat center center/cover; color: #ffffff; min-height: 100vh; display: flex; align-items: center; padding-bottom: 40px; }
+
+        /* Updated hero section for counselling theme */
+        .home-section { 
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('../assets/counseling-bg.jpg') no-repeat center center/cover; 
+            color: #ffffff; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            padding-bottom: 40px; 
+        }
+
         .hero-title { font-size: 3rem; color: #ffffff; margin-bottom: 1rem; }
         .hero-subtitle { font-size: 1.5rem; color: #ffffff; margin-bottom: 2rem; }
-        .btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 4px; font-size: 1rem; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+
+        .btn { 
+            display: inline-block; padding: 0.75rem 1.5rem; border-radius: 4px; 
+            font-size: 1rem; text-align: center; cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+
         .btn-primary { background-color: var(--primary-color); color: #ffffff; border: none; }
         .btn-primary:hover { background-color: var(--hover-color); }
+
         .btn-secondary { background-color: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); }
         .home-section .btn-secondary { color: #ffffff; border-color: #ffffff; }
         .home-section .btn-secondary:hover { background-color: #ffffff; color: var(--primary-color); }
+
         .section-title { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: var(--primary-color); }
-        .domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .domain-card { background: var(--secondary-bg); padding: 1.5rem; border-radius: 8px; text-align: center; transition: box-shadow 0.3s ease; }
+
+        .domain-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 2rem; 
+        }
+
+        .domain-card { 
+            background: var(--secondary-bg); padding: 1.5rem; border-radius: 8px; 
+            text-align: center; transition: box-shadow 0.3s ease; 
+        }
+
         .domain-card:hover { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+
         .domain-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
+
         .footer { background-color: var(--primary-color); color: #ffffff; padding: 2rem 0; text-align: center; }
         .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
         .footer-link { color: #ffffff; font-size: 0.9rem; }
@@ -72,19 +126,21 @@
             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span class="hamburger"></span>
             </button>
-            <ul class="nav-menu">
+<ul class="nav-menu">
 
-                <li><a href="#domain" class="quick-link"><i class="fas fa-book-open"></i> Study Materials</a></li>
-                <li><a href="#documents" class="quick-link"><i class="fas fa-file-alt"></i> Past Papers and
-                        Tutorials</a></li>
-                <!-- <li><a href="#milestones" class="quick-link"><i class="fas fa-chalkboard-teacher"></i> Tutorials</a></li> -->
-                <li><a href="#team" class="quick-link"><i class="fas fa-users"></i> About Us</a></li>
-                <!-- <li><a href="signup.html" class="quick-link"><i class="fas fa-user-plus"></i> Sign Up</a></li>
-                    <li><a href="login.html" class="quick-link"><i class="fas fa-sign-in-alt"></i> Login</a></li> -->
+    <li><a href="#domain" class="quick-link">
+        <i class="fas fa-heart"></i> Counselling Services (උපදේශන සේවා)
+    </a></li>
 
+    <li><a href="#documents" class="quick-link">
+        <i class="fas fa-hands-helping"></i> Support Resources (උපකාරක සම්පත්)
+    </a></li>
 
-            </ul>
+    <li><a href="#team" class="quick-link">
+        <i class="fas fa-user-friends"></i> About Us (අපි ගැන)
+    </a></li>
 
+</ul>
 
         </div>
     </nav>
